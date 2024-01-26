@@ -1,0 +1,134 @@
+<p-toolbar id="mydiv">
+  <div class="p-toolbar-group-start">
+    <div class="data">
+      <div>
+        <button
+          pButton
+          pRipple
+          type="button"
+          (click)="isShowDetail = !isShowDetail"
+          class="p-button-rounded p-button-text btn"
+          styleClass="p-button-secondary"
+        >
+          <i class="pi pi-user"></i>
+        </button>
+      </div>
+
+      <p-dialog
+        [header]=" detailHeader | translate"
+        [(visible)]="isShowDetail"
+        [style]="{ width: '20vw' }"
+        [position]="'left'"
+        [draggable]="false"
+      >
+        <ng-container
+          [ngTemplateOutlet]="detailTemplate || defaultDetailTemplate"
+        >
+        </ng-container>
+      </p-dialog>
+    </div>
+  </div>
+
+  <div class="p-toolbar-group-center">
+    <ng-container
+      [ngTemplateOutlet]="titleTemplate || defaultTitleTemplate"
+    ></ng-container>
+
+    <div class="arrowPadding">
+      <button
+        pButton
+        pRipple
+        type="button"
+        (click)="onPrevClick()"
+        class="p-button-rounded p-button-text"
+        styleClass="p-button-secondary"
+      >
+        <i class="pi pi-angle-left"></i>
+      </button>
+
+      <button
+        pButton
+        pRipple
+        type="button"
+        (click)="onNextClick()"
+        class="p-button-rounded p-button-text"
+        styleClass="p-button-secondary"
+      >
+        <i class="pi pi-angle-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="p-toolbar-group-start">
+    <section>
+      <span class="input p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          [disabled]="isSearchDisabled"
+          type="text"
+          pInputText
+          [placeholder]=" searchPlaceholder | translate"
+          #search
+          [(ngModel)]="searchText"
+          (keyup.enter)="onSearch(search.value)"
+        />
+
+        <button
+          pButton
+          pRipple
+          type="button"
+          (click)="onSearchClear()"
+          class="p-button-rounded p-button-text btn"
+          styleClass="p-button-secondary"
+        >
+          <i class="pi pi-times"></i>
+        </button>
+      </span>
+    </section>
+
+    <button
+      pButton
+      pRipple
+      type="button"
+      (click)="isShowList = !isShowList"
+      class="p-button-rounded p-button-text"
+      styleClass="p-button-secondary"
+    >
+      <i class="pi pi-list"></i>
+    </button>
+
+    <p-dialog
+      [header]="listHeader | translate"
+      [(visible)]="isShowList"
+      [style]="{ width: '20vw' }"
+      [position]="'right'"
+      [draggable]="false"
+    >
+      <p-table [value]="value" [tableStyle]="{ 'min-width': '10rem' }">
+        <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
+          <tr (click)="onRowSelect(rowIndex)" [pSelectableRow]="row">
+            <ng-container
+              [ngTemplateOutlet]="listTemplate || defaultListTemplate"
+              [ngTemplateOutletContext]="{ $implicit: row }"
+            ></ng-container>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-dialog>
+
+    <ng-template #defaultTitleTemplate>
+      <div class="shortResult">
+        {{ yamlDocument }}
+      </div>
+    </ng-template>
+
+    <ng-template #defaultDetailTemplate>
+      <pre>{{ yamlDocument }}</pre>
+    </ng-template>
+
+    <ng-template #defaultListTemplate let-row>
+      <td>{{ row[getKey(value[0], 0)] }}</td>
+      <td>{{ row[getKey(value[0], 1)] }}</td>
+    </ng-template>
+  </div>
+</p-toolbar>

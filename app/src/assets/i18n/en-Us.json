@@ -1,0 +1,8 @@
+{
+  "詳細資料": "Detailed information",
+  "請輸入身分證號或病歷號碼": "Please enter your ID card number or medical record number.",
+  "查詢清單": "Search list",
+  "請自行傳入欲呈現的placeholder": "Please pass in the placeholder you want to present.",
+  "請自行傳入欲呈現的detailHeader": "Please pass in the detailHeader you want to present.",
+  "請自行傳入欲呈現的listHeader": "Please pass in the listHeader you want to present."
+}
